@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Arbolitos Homeowner Association #8 Community Website</title>
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    font-family: "Poppins";
+    box-sizing: border-box;
+}
+body {
+    background-color: #c4a895;
+    color: #0f0f0f;
+    text-align: center;
+    margin: 0;
+    min-height: 100vh;
+}
+h1 {
+    margin: auto;
+    font-size: 6vw;
+}
+p {
+    margin: auto;
+}
+.navi {
+    backdrop-filter: blur(6px);
+    position: fixed;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.2);
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    justify-content: space-between;
+    display: flex;
+    z-index: 10;
+}
+.navi a {
+    text-align: right !important;
+    justify-content: space-between;
+    color: #0f0f0f;
+}
+.hero {
+    margin-top: 15%;
+    padding: 0 5%;
+}
+
+/* ---- added for login/signup ---- */
+.auth-wrap {
+    max-width: 420px;
+    margin: 60px auto 40px;
+    padding: 32px;
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    text-align: left;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    font-weight: 600;
+    color: #0f0f0f;
+}
+.tab-btn.active {
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+}
+.field {
+    margin-bottom: 14px;
+}
+.field label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+.field input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(15, 15, 15, 0.3);
+    font-family: "Poppins";
+    font-size: 0.95rem;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+.submit-btn:hover {
+    opacity: 0.85;
+}
+.status-msg {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.status-msg.error { color: #7a1c1c; }
+.status-msg.ok { color: #1c4d2b; }
+
+.form-panel { display: none; }
+.form-panel.active { display: block; }
+
+.welcome-card {
+    max-width: 420px;
+    margin: 60px auto 40px;
+    padding: 32px;
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+}
+.logout-btn {
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ---- admin ---- */
+.admin-footer {
+    margin-top: 80px;
+    padding: 24px 5% 60px;
+    border-top: 1px solid rgba(15, 15, 15, 0.2);
+}
+.admin-footer p {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+.admin-secret-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 320px;
+    margin: 0 auto;
+}
+.admin-secret-row input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(15, 15, 15, 0.3);
+    font-family: "Poppins";
+}
+.admin-secret-row button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+    cursor: pointer;
+}
+
+.admin-panel {
+    display: none;
+    max-width: 900px;
+    margin: 24px auto 60px;
+    padding: 24px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    text-align: left;
+}
+.admin-panel.active { display: block; }
+.admin-panel h2 { font-size: 1.4rem; margin-bottom: 16px; }
+table.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+table.admin-table th, table.admin-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(15, 15, 15, 0.15);
+    text-align: left;
+}
+.status-pill {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+}
+.status-pill.pending { background-color: #8a7a5c; }
+.status-pill.approved { background-color: #1c4d2b; }
+.status-pill.declined { background-color: #7a1c1c; }
+.row-actions button {
+    padding: 5px 10px;
+    margin-right: 6px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #f0f0f0;
+}
+.approve-btn { background-color: #1c4d2b; }
+.decline-btn { background-color: #7a1c1c; }
+</style>
+<body>
+<div class="navi">
+    Los Arbolitos #8
+    <a href="google.com">test link</a>
+</div>
+
+<div class="hero">
+    <h1>Welcome to the Los Arbolitos</h1>
+    <p>Discover the beauty of the San Luis Rey community in Oceanside, California, nestled perfectly in the Northern region of stunning San Diego County.</p>
+</div>
+
+<!-- Logged out: signup / login -->
+<div id="auth-section" class="auth-wrap">
+    <div class="tabs">
+        <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Log In</button>
+        <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <form id="login-form" class="form-panel active">
+        <div class="field">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required>
+        </div>
+        <button type="submit" class="submit-btn">Log In</button>
+    </form>
+
+    <form id="signup-form" class="form-panel">
+        <div class="field">
+            <label for="signup-first">First Name</label>
+            <input type="text" id="signup-first" required>
+        </div>
+        <div class="field">
+            <label for="signup-last">Last Name</label>
+            <input type="text" id="signup-last" required>
+        </div>
+        <div class="field">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" required>
+        </div>
+        <div class="field">
+            <label for="signup-address">Home Address</label>
+            <input type="text" id="signup-address" required>
+        </div>
+        <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+
+    <div id="auth-status" class="status-msg"></div>
+</div>
+
+<!-- Logged in -->
+<div id="welcome-section" class="welcome-card" style="display:none;">
+    <p>Welcome back, <span id="welcome-name"></span>!</p>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
+</div>
+
+<!-- Admin -->
+<div class="admin-footer">
+    <p>Admin Access here:</p>
+    <div class="admin-secret-row">
+        <input type="password" id="admin-secret-input" placeholder="•••••••••">
+        <button onclick="verifyAdmin()">Enter</button>
+    </div>
+    <div id="admin-status" class="status-msg"></div>
+</div>
+
+<div id="admin-panel" class="admin-panel">
+    <h2>Resident Approval Queue</h2>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="admin-table-body"></tbody>
+    </table>
+</div>
+
+<script>
+const API_BASE = "https://la8hoa.mcalvanico10.workers.dev";
+let adminSecret = null;
+
+function switchTab(tab) {
+    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+    document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+    document.getElementById('login-form').classList.toggle('active', tab === 'login');
+    document.getElementById('signup-form').classList.toggle('active', tab === 'signup');
+    document.getElementById('auth-status').textContent = '';
+}
+
+function showStatus(elId, message, isError) {
+    const el = document.getElementById(elId);
+    el.textContent = message;
+    el.className = 'status-msg ' + (isError ? 'error' : 'ok');
+}
+
+async function checkSession() {
+    try {
+        const res = await fetch(`${API_BASE}/api/me`, { credentials: 'include' });
+        const data = await res.json();
+        if (data.loggedIn) {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('welcome-section').style.display = 'block';
+            document.getElementById('welcome-name').textContent = data.firstName;
+        }
+    } catch (e) {
+        // worker unreachable; fail quietly, forms still work
+    }
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    try {
+        const res = await fetch(`${API_BASE}/api/login`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            showStatus('auth-status', data.message, false);
+            checkSession();
+        } else {
+            showStatus('auth-status', data.error || 'Login failed.', true);
+        }
+    } catch (e) {
+        showStatus('auth-status', 'Could not reach the server.', true);
+    }
+});
+
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        firstName: document.getElementById('signup-first').value.trim(),
+        lastName: document.getElementById('signup-last').value.trim(),
+        email: document.getElementById('signup-email').value.trim(),
+        address: document.getElementById('signup-address').value.trim()
+    };
+    try {
+        const res = await fetch(`${API_BASE}/api/signup`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+            showStatus('auth-status', data.message, false);
+            document.getElementById('signup-form').reset();
+        } else {
+            showStatus('auth-status', data.error || 'Signup failed.', true);
+        }
+    } catch (e) {
+        showStatus('auth-status', 'Could not reach the server.', true);
+    }
+});
+
+async function logout() {
+    try {
+        await fetch(`${API_BASE}/api/logout`, { method: 'POST', credentials: 'include' });
+    } catch (e) {}
+    document.getElementById('welcome-section').style.display = 'none';
+    document.getElementById('auth-section').style.display = 'block';
+}
+
+async function verifyAdmin() {
+    const secret = document.getElementById('admin-secret-input').value;
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ secret })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+            adminSecret = secret;
+            document.getElementById('admin-status').textContent = '';
+            document.getElementById('admin-panel').classList.add('active');
+            loadUsers();
+        } else {
+            adminSecret = null;
+            document.getElementById('admin-panel').classList.remove('active');
+            showStatus('admin-status', 'Incorrect code.', true);
+        }
+    } catch (e) {
+        showStatus('admin-status', 'Could not reach the server.', true);
+    }
+}
+
+function statusLabel(status) {
+    if (status === 1) return { text: 'Approved', cls: 'approved' };
+    if (status === -1) return { text: 'Declined', cls: 'declined' };
+    return { text: 'Pending', cls: 'pending' };
+}
+
+async function loadUsers() {
+    if (!adminSecret) return;
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/users`, {
+            headers: { 'X-Admin-Secret': adminSecret }
+        });
+        const data = await res.json();
+        if (!res.ok) return;
+        const tbody = document.getElementById('admin-table-body');
+        tbody.innerHTML = '';
+        data.users.forEach(u => {
+            const s = statusLabel(u.status);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${u.first_name} ${u.last_name}</td>
+                <td>${u.email}</td>
+                <td>${u.address}</td>
+                <td><span class="status-pill ${s.cls}">${s.text}</span></td>
+                <td class="row-actions">
+                    <button class="approve-btn" onclick="setStatus(${u.id}, 'approve')">Approve</button>
+                    <button class="decline-btn" onclick="setStatus(${u.id}, 'decline')">Decline</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (e) {}
+}
+
+async function setStatus(id, action) {
+    if (!adminSecret) return;
+    try {
+        await fetch(`${API_BASE}/api/admin/${action}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Secret': adminSecret
+            },
+            body: JSON.stringify({ id })
+        });
+        loadUsers();
+    } catch (e) {}
+}
+
+checkSession();
+</script>
+</body>
+</html>
