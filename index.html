@@ -4,60 +4,361 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Los Arbolitos Homeowner Association #8 Community Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #c4a895;
+            color: #2b231d;
+            text-align: center;
+            line-height: 1.6;
+            padding-top: 65px; /* Offset for fixed navbar */
+        }
+
+        /* --- Navigation Bar --- */
+        .navi {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            background-color: rgba(255, 255, 255, 0.3);
+            left: 0;
+            right: 0;
+            top: 0;
+            padding: 14px 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        .navi .logo {
+            font-size: 1.1rem;
+            color: #0f0f0f;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* Desktop Navigation Links */
+        .navi .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .navi .nav-links a {
+            color: #0f0f0f;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        .navi .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Mobile Hamburger Button (CSS-Only Toggle) */
+        .menu-toggle {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: #0f0f0f;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            max-width: 700px;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-weight: 300;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            padding: 0 10px;
+        }
+
+        .hero .btn {
+            margin-top: 25px;
+            padding: 12px 28px;
+            background-color: #ffffff;
+            color: #2b231d;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+
+        .hero .btn:hover {
+            background-color: #2b231d;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* --- Content Container --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffffff;
+            margin: 6px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Grid & Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 24px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: left;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #0f0f0f;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card .card-btn {
+            align-self: flex-start;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0f0f0f;
+            border-bottom: 2px solid #0f0f0f;
+            padding-bottom: 2px;
+            transition: opacity 0.2s ease;
+        }
+
+        .card .card-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 30px 20px;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #2b231d;
+        }
+
+        /* --- Mobile Navigation Dropdown Logic --- */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .navi .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: rgba(196, 168, 149, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            }
+
+            .navi .nav-links a {
+                padding: 12px 20px;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .navi .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            /* Toggle Menu via Hidden Checkbox */
+            .menu-toggle:checked ~ .nav-links {
+                display: flex;
+            }
+
+            /* Animate Hamburger icon to an 'X' when open */
+            .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .menu-toggle:checked ~ .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+    </style>
 </head>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-* {
-    font-family: "Poppins";
-}
-
-body {
-    background-color: #c4a895;
-    color: #0f0f0f;
-    text-align: center;
-}
-
-h1 {
-    margin: auto;
-    font-size: 6vw;
-}
-
-p {
-    margin: auto;
-}
-
-.navi {
-    backdrop-filter: blur(6px);
-    position: fixed;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.2);
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 12px;
-    border-bottom: 1px solid #f0f0f0;
-    text-align: left;
-    justify-content: space-between;
-}
-
-.navi a {
-    text-align: right !important;
-    justify-content: space-between;
-}
-.hero {
-    background-image: 
-}
-</style>
 <body>
-<div class="navi">
-    Los Arbolitos #8
-    <a href="google.com">test link</a>
-</div>
 
-<div class="hero" style="margin-top: 15%;">
-    <h1>Welcome to the Los Arbolitos</h1>
-    <p>Discover the beauty of the San Luis Rey community in Oceanside, California, nestled perfectly in the Northern region of stunning San Diego County.</p>
+    <!-- Navigation Bar -->
+    <nav class="navi">
+        <a href="/" class="logo">Los Arbolitos #8</a>
+        
+        <!-- Pure CSS Dropdown Toggle -->
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger" aria-label="Toggle Navigation Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+
+        <div class="nav-links">
+            <a href="/about">Resources</a>
+            <a href="/downloads">Home Owners</a>
+            <a href="/downloads">Downloads</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Welcome to Los Arbolitos</h1>
+        <p>Discover the beauty of the San Luis Rey community in Oceanside, California, nestled perfectly in the Northern region of stunning San Diego County.</p>
+        <a href="about" class="btn">Explore Community</a>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+
+        <!-- About Section -->
+        <section style="margin-bottom: 50px;">
+            <h2 class="section-title">Our Community</h2>
+            <p style="max-width: 800px; margin: 15px auto 0; font-size: 1rem;">
+                Los Arbolitos HOA #8 is dedicated to preserving the quality, safety, and aesthetic harmony of our neighborhood. From well-maintained common areas to close community ties, we strive to make Oceanside a wonderful place to call home.
+            </p>
+        </section>
+
+        <!-- Information Cards -->
+        <section>
+            <h2 class="section-title">Community Quick Links</h2>
+            <div class="grid">
+                
+                <div class="card">
+                    <div>
+                        <h3>Announcements</h3>
+                        <p>Stay up to date with recent notices, board meeting minutes, and upcoming neighborhood events.</p>
+                    </div>
+                    <a href="announcements" class="card-btn">View Notices &rarr;</a>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <h3>Architectural Forms</h3>
+                        <p>Planning home improvements? Submit an architectural request form prior to starting exterior projects.</p>
+                    </div>
+                    <a href="architectural" class="card-btn">Get Forms &rarr;</a>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <h3>HOA Rules & Bylaws</h3>
+                        <p>Access neighborhood CC&Rs, parking regulations, trash collection schedules, and property standards.</p>
+                    </div>
+                    <a href="documents" class="card-btn">Read Rules &rarr;</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Los Arbolitos Homeowner Association #8</strong></p>
+        <p>San Luis Rey Valley | Oceanside, CA 92058</p>
+        <p style="margin-top: 10px; font-size: 0.75rem; opacity: 0.8;">&copy; Los Arbolitos HOA #8. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
